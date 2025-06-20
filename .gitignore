@@ -1,3 +1,10 @@
+.off_*
+.angular
+.editorconfig
+.vscode
+.history
+
+
 # Logs
 logs
 *.log

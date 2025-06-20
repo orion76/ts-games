@@ -1,0 +1,29 @@
+@use 'fonts';
+@use '@angular/material' as mat;
+
+:root {
+    @include mat.button-overrides((outlined-container-shape: 0px, filled-container-shape: 0px));
+    @include mat.card-overrides((outlined-container-shape: 0px, elevated-container-shape: 0px));
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.mat-toolbar {
+    gap: .2em;
+}
+
+.game-page {
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+    gap: 1em;
+}
+
