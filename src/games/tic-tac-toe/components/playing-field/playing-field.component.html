@@ -1,0 +1,5 @@
+@for (row of store.field(); track $index; let y=$index) { <div class="row"> @for (char of row; track $index; let
+    x=$index) { <ttt-cell class="cell" colorCross="#ff9d00" i18n-colorCross colorZero="#0099ff" i18n-colorZero
+        [char]="getCharShow(char)" (click)="onCellClick(x,y)" /> } </div> }@empty { } <div class="playing-field-cover"
+    [class.playing-field-cover-active]></div> @let gameWin = isGameWin(); @if(gameWin){ <ttt-winning-line
+    class="winning-line" [lineIndex]="gameWin.lineIndex" /> }

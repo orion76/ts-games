@@ -12,6 +12,7 @@ module.exports = tseslint.config(
       eslint.configs.recommended,
       ...tseslint.configs.recommended,
       ...tseslint.configs.stylistic,
+      ...angular.configs.templateAll,
       ...angular.configs.tsRecommended,
       ...angular.configs.templateRecommended,
       ...angular.configs.templateAccessibility,
@@ -36,6 +37,8 @@ module.exports = tseslint.config(
         },
       ],
       "@angular-eslint/component-class-suffix": "off",
+      "@angular-eslint/template/no-call-expression": "off",
+      "@angular-eslint/template/i18n": "off",
       "@typescript-eslint/ban-ts-comment": "off",
       "@typescript-eslint/adjacent-overload-signatures": "off"
 
@@ -46,7 +49,14 @@ module.exports = tseslint.config(
     extends: [
       ...angular.configs.templateRecommended,
       ...angular.configs.templateAccessibility,
+      ...angular.configs.templateAll,
+
+      ...angular.configs.templateRecommended,
+      ...angular.configs.templateAccessibility,
     ],
-    rules: {},
+    rules: {
+      "@angular-eslint/template/no-call-expression": "off",
+      "@angular-eslint/template/i18n": "off"
+    },
   }
 );

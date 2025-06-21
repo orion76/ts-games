@@ -1,10 +1,7 @@
 import { NgPluginBase, Plugin } from "@orion76/ng-plugin";
-import { LINES_COORDS } from "../../../constants";
 import { getEmptyCells, getRandomItem } from "../../../services/utils";
-import { IGameStrategy, IStrategiOptions, TCellCoord, TFieldState, UChar } from "../../../types";
-import { findLinesByCharCount } from "../../../utils/field-result";
+import { IGameStrategy, IStrategiOptions, TCellCoord } from "../../../types";
 import { TTT_STRATEGIES_PLUGIN_TYPE } from "../plugin-manager";
-import { hasCell } from "../../../utils/cell-utils";
 import { arraysDifferenceLeft, arraysIntersection, getLinesWithCellFilledCount } from "../utils";
 
 export const STRATEGY_ID_GIVEAWAYS = 'giveaways'

@@ -32,9 +32,9 @@ export const GAME_CONFIG = new InjectionToken<IGameConfig>('GAME_CONFIG');
 @Component({
   selector: 'game--tick-tack-toe--main',
   template: `
-    <ttt-play-control ></ttt-play-control>
-    <ttt-play-state></ttt-play-state>
-    <ttt-playing-field></ttt-playing-field>
+    <ttt-play-control class="play-control"></ttt-play-control>
+    <ttt-play-state class="play-state"></ttt-play-state>
+    <ttt-playing-field class="play-field"></ttt-playing-field>
     <!-- <ttt-play-log></ttt-play-log> -->
   `,
   styleUrl: 'main.component.scss',

@@ -1,11 +1,11 @@
 /* eslint-disable @angular-eslint/component-class-suffix */
-import { ChangeDetectionStrategy, Component, computed, inject, ViewEncapsulation } from "@angular/core";
+import { ChangeDetectionStrategy, Component, computed, inject } from "@angular/core";
 import { PLAYER_HUMAN_TYPE, TTT_PLAYER_PLUGIN_MANAGER } from "../../plugins/player";
+import { EGameStopReason } from "../../services/game-management/types";
 import { GAME_STORE } from "../../services/store/game.store";
+import { ICharShow, UChar } from "../../types";
 import { TTTCell } from "../cell/cell.component";
 import { TTTWinningLine } from "../winning-line/winning-line.component";
-import { EGameStopReason } from "../../services/game-management/types";
-import { ICharShow, UChar } from "../../types";
 
 @Component({
     selector: 'ttt-playing-field',
@@ -14,16 +14,14 @@ import { ICharShow, UChar } from "../../types";
         @for (row of store.field(); track $index; let y=$index) {
             <div class="row">
             @for (char of row; track $index; let x=$index) {
-                <ttt-cell class="cell" [char]="getCharShow(char)" (click)="onCellClick(x,y)" colorCross="#ff9d00" colorZero="#0099ff"></ttt-cell>
+                <ttt-cell class="cell" colorCross="#ff9d00" colorZero="#0099ff" [char]="getCharShow(char)" (click)="onCellClick(x,y)"/>
             }
             </div>
-        }@empty {
-        
         }
         <div class="playing-field-cover" [class.playing-field-cover-active]></div>
         @let gameWin = isGameWin();
         @if(gameWin){
-            <ttt-winning-line class="winning-line" [lineIndex]="gameWin.lineIndex"></ttt-winning-line>
+            <ttt-winning-line class="winning-line" [lineIndex]="gameWin.lineIndex"/>
         }
   
     `,
@@ -46,7 +44,7 @@ export class TTTPlayingField {
 
     readonly isGameWin = computed(() => {
         const reason = this.store.gameOver();
-         if (!reason || reason.reason !== EGameStopReason.WIN) {
+        if (!reason || reason.reason !== EGameStopReason.WIN) {
             return
         }
         return { playerId: reason.playerId, lineIndex: reason.lines[0] };
