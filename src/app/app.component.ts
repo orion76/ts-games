@@ -9,5 +9,5 @@ import { RouterLink, RouterOutlet } from '@angular/router';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  title = 'spa';
+  title = 'ts-games';
 }

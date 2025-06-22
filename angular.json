@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "spa": {
+    "ts-games": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -18,7 +18,7 @@
           "builder": "@angular-devkit/build-angular:application",
           "options": {
             "preserveSymlinks": true,
-            "outputPath": "dist/spa",
+            "outputPath": "dist/ts-games",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -66,10 +66,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "spa:build:production"
+              "buildTarget": "ts-games:build:production"
             },
             "development": {
-              "buildTarget": "spa:build:development"
+              "buildTarget": "ts-games:build:development"
             }
           },
           "defaultConfiguration": "development"
