@@ -25,6 +25,9 @@ jobs:
     - name: Install dependencies
       run: npm ci
       
+    - name: Install angular/cli
+      run: npm i @angular/cli
+      
     - name: Build
       run: ng build --configuration production --base-href="/ts-games/"
       
