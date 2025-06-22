@@ -7,12 +7,13 @@ on:
   push:
     branches: [ "main" ]
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [22.x]
-    steps:
+    
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
 steps:
     - uses: actions/checkout@v3
     
@@ -32,18 +33,3 @@ steps:
       with:
         github_token: ${{ secrets.DEPLOY }}
         publish_dir: ./dist/ts-games
-
-
-
-    # - uses: actions/checkout@v4
-    # - name: Use Node.js ${{ matrix.node-version }}
-    #   uses: actions/setup-node@v4
-    #   with:
-    #     node-version: ${{ matrix.node-version }}
-    #     cache: 'npm'
-    # - name: Prepare and deploy
-    #   env:
-    #     GH_TOKEN: ${{ secrets.DEPLOY }}
-    #   run: |
-    #     npm install
-    #     npm run ng -- deploy --base-href=/ts-games/ --name="Angular games" --email=glazzkow@gmail.com
