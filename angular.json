@@ -19,6 +19,7 @@
           "options": {
             "preserveSymlinks": true,
             "outputPath": "dist/ts-games",
+            "baseHref": "/ts-games/",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
