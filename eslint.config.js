@@ -40,7 +40,9 @@ module.exports = tseslint.config(
       "@angular-eslint/template/no-call-expression": "off",
       "@angular-eslint/template/i18n": "off",
       "@typescript-eslint/ban-ts-comment": "off",
-      "@typescript-eslint/adjacent-overload-signatures": "off"
+      "@typescript-eslint/adjacent-overload-signatures": "off",
+      "@angular-eslint/template/button-has-type": "off",
+      "@angular-eslint/template/no-inline-styles": "off"
 
     },
   },
@@ -56,7 +58,9 @@ module.exports = tseslint.config(
     ],
     rules: {
       "@angular-eslint/template/no-call-expression": "off",
-      "@angular-eslint/template/i18n": "off"
+      "@angular-eslint/template/i18n": "off",
+      "@angular-eslint/template/button-has-type": "off",
+      "@angular-eslint/template/no-inline-styles": "off"
     },
   }
 );

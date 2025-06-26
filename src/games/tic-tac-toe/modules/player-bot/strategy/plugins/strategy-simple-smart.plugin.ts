@@ -1,8 +1,7 @@
-import { inject } from "@angular/core";
 import { NgPluginBase, Plugin } from "@orion76/ng-plugin";
-import { GAME_CONFIG } from "../../../main.component";
-import { getEmptyCells, getRandomItem } from "../../../services/utils";
-import { IGameStrategy, IStrategiOptions, TCellCoord } from "../../../types";
+import { getEmptyCells, getRandomItem } from "../../../../services/utils";
+import { TCellCoord } from "../../../../types";
+import { IGameStrategy, IStrategiOptions } from "../../types";
 import { TTT_STRATEGIES_PLUGIN_TYPE } from "../plugin-manager";
 import { getLinesWithCellFilledCount } from "../utils";
 
@@ -10,14 +9,13 @@ export const STRATEGY_ID_SIMPLE_SMART = 'simple-smart'
 
 @Plugin({
     id: STRATEGY_ID_SIMPLE_SMART,
-    label: 'Simple smart strategy',
+    label: 'Simple smart',
     type: TTT_STRATEGIES_PLUGIN_TYPE
 })
-export class SimpleRandomStrategy extends NgPluginBase implements IGameStrategy {
-    config = inject(GAME_CONFIG)
+export class StrategySimpleRandom extends NgPluginBase implements IGameStrategy {
     step({ field, myChar, opponentChar }: IStrategiOptions): TCellCoord {
         let result: TCellCoord | undefined;
-        debugger;
+ 
         /**
          * Если остался последних ход, завершаем игру победой
          */

@@ -24,11 +24,25 @@ const LINES: [TCellCoord, TCellCoord][] = [
   selector: 'ttt-winning-line',
   standalone: true,
   template: `
-    <svg  class="svg-line"  [attr.viewBox]="viewBox" xmlns="http://www.w3.org/2000/svg">
+    <svg  class="svg-line"  xmlns="http://www.w3.org/2000/svg" [attr.viewBox]="viewBox">
           <line [attr.x1]="coords.x1" [attr.y1]="coords.y1" [attr.x2]="coords.x2" [attr.y2]="coords.y2" />
     </svg>
   `,
-  styles: ``,
+  styles: `
+  
+    :host {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+
+        .svg-line {
+            stroke: black;
+            stroke-width: 2;
+            stroke-linecap: round;
+            filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 1));
+        }
+    }
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TTTWinningLine implements OnInit {

@@ -7,12 +7,18 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "scss"
+          "style": "scss",
+          "standalone": true,
+          "inlineTemplate": true,
+          "changeDetection": "OnPush"
         }
       },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
+      "i18n": {
+        "sourceLocale": "ru"
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:application",

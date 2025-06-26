@@ -1,53 +1,30 @@
-// :host {
-//     display: flex;
-//     flex-direction: column;
-//     position: relative;
+:host {
+    min-width: 10em;
+    position: relative;
+    display: flex;
+    flex-direction: column;
 
-//     .row {
-//         display: flex;
-//         gap: 4px;
-//         padding: 2px 0px;
+    .row {
+        display: flex;
 
-//         .cell {
-//             width: 33%;
-//             padding-top: 33%;
-//             position: relative;
-//             border: 1px solid #999;
+        .cell {
+            width: 100%;
+            border: 1px solid #999;
+            aspect-ratio: 1 / 1;
+            margin: 2px;
 
-//             .char {
-//                 position: absolute;
-//                 height: 100%;
-//                 width: 100%;
-//                 display: flex;
-//                 justify-content: center;
-//                 align-items: center;
-//                 top: 0;
-//                 left: 0;
-//             }
-//         }
+            .char {
 
-//         // .cell::before {
-//         //     content: "";
-//         //     position: absolute;
-//         //     top: 0;
-//         //     left: 0;
-//         //     width: 100%;
-//         //     height: 100%;
-//         // }
-//     }
+                height: 100%;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                top: 0;
+                left: 0;
+            }
+        }
 
-//     .winning-line {
-//         position: absolute;
-//         top: 0;
-//         left: 0;
-//         height: 100%;
-//         width: 100%;
+    }
 
-//         .svg-line {
-//             stroke: black;
-//             stroke-width: 2;
-//             stroke-linecap: round;
-//             filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 1));
-//         }
-//     }
-// }
+}

@@ -2,7 +2,7 @@
 import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrolling';
 import { AfterViewChecked, ChangeDetectionStrategy, Component, computed, inject, viewChild } from "@angular/core";
 import { GAME_STORE } from "../../services/store/game.store";
-import { IPlayerConfig, IStepData } from "../../types";
+import { IStepData } from "../../types";
 import { TTTCell } from "../cell/cell.component";
 
 
@@ -13,7 +13,7 @@ import { TTTCell } from "../cell/cell.component";
         <cdk-virtual-scroll-viewport itemSize="10"  class="steps">
             <div *cdkVirtualFor="let step of  store.steps()" class="step">
                 <div class="content">
-                    <ttt-cell class="step--char" [char]="getPlayer(step)"></ttt-cell>
+                    <ttt-cell class="step--char" [char]="getPlayer(step)"/>
                     <div class="step--player step-info">{{step.playerId}}</div>
                     <div class="step--status step-info">{{step.status}}</div>
                 </div>

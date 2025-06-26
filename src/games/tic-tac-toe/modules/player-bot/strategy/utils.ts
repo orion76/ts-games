@@ -1,9 +1,10 @@
-import { LINES_COORDS } from "../../constants";
-import { getEmptyCells } from "../../services/utils";
-import { TCellCoord, TFieldState, UChar } from "../../types";
-import { hasCell } from "../../utils/cell-utils";
-import { findLinesByCharCount } from "../../utils/field-result";
-import { TLineCoord } from "../../utils/generate-coordinates";
+import { LINES_COORDS } from "../../../constants";
+import { getEmptyCells } from "../../../services/utils";
+import { TFieldState, UChar, TCellCoord } from "../../../types";
+import { hasCell } from "../../../utils/cell-utils";
+import { findLinesByCharCount } from "../../../utils/field-result";
+import { TLineCoord } from "../../../utils/generate-coordinates";
+
 
 export function getLinesWithCellFilledCount(field: TFieldState, char: UChar, cellFilledCount: number): TLineCoord[] {
     return findLinesByCharCount(field, char, cellFilledCount).map((index) => LINES_COORDS[index]);

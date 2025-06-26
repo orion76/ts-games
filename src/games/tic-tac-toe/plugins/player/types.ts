@@ -7,9 +7,6 @@ export interface IPlayerDefinition extends IPluginDefinition, IPlayerConfig {
 
 }
 
-export interface IPlayerBotDefinition extends IPlayerDefinition {
-    strategiId: string;
-}
 
 
 export interface IPlayerHumanDefinition extends IPlayerDefinition {
@@ -32,8 +29,5 @@ export interface IPlayer<D extends IPlayerDefinition = IPlayerDefinition> extend
 }
 
 export interface IPlayerHuman extends IPlayer<IPlayerHumanDefinition> {
-
-}
-export interface IPlayerBot extends IPlayer<IPlayerBotDefinition> {
 
 }

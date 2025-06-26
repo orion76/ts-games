@@ -1,19 +1,21 @@
 import { NgPluginBase, Plugin } from "@orion76/ng-plugin";
-import { getEmptyCells, getRandomItem } from "../../../services/utils";
-import { IGameStrategy, IStrategiOptions, TCellCoord } from "../../../types";
+
 import { TTT_STRATEGIES_PLUGIN_TYPE } from "../plugin-manager";
 import { arraysDifferenceLeft, arraysIntersection, getLinesWithCellFilledCount } from "../utils";
+import { getEmptyCells, getRandomItem } from "../../../../services/utils";
+import { TCellCoord } from "../../../../types";
+import { IGameStrategy, IStrategiOptions } from "../../types";
+
 
 export const STRATEGY_ID_GIVEAWAYS = 'giveaways'
 
 @Plugin({
     id: STRATEGY_ID_GIVEAWAYS,
-    label: 'The strategy of giveaways.',
+    label: 'Giveaways',
     type: TTT_STRATEGIES_PLUGIN_TYPE
 })
-export class GiveawaysStrategy extends NgPluginBase implements IGameStrategy {
+export class StrategyGiveaways extends NgPluginBase implements IGameStrategy {
     step({ field, myChar: charMy, opponentChar: charOpponent }: IStrategiOptions): TCellCoord {
-        let result: TCellCoord | undefined;
         const emptyCells = getEmptyCells(field);
         let forbiddenSteps: TCellCoord[] = [];
         /**

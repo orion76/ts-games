@@ -1,0 +1,72 @@
+ :host {
+   display: block;
+   width: 100vw;
+   height: 100vh;
+   overflow: hidden;
+
+ }
+
+//  .container {
+//    width: 100vw;
+//    height: 100vh;
+//    position: relative;
+//    overflow: hidden;
+//  }
+
+ .blocks-wrapper {
+   height: 100vh;
+   width: max-content;
+   display: flex;
+   transition: transform 0.3s ease-out;
+   cursor: grab;
+ }
+
+ .blocks-wrapper:active {
+   cursor: grabbing;
+ }
+
+ .blocks-wrapper.no-transition {
+   transition: none;
+ }
+
+
+
+
+ .swipe-indicator {
+   position: absolute;
+   bottom: 30px;
+   left: 50%;
+   transform: translateX(-50%);
+   display: flex;
+   gap: 10px;
+   z-index: 100;
+ }
+
+ .dot {
+   width: 12px;
+   height: 12px;
+   border-radius: 50%;
+   background: rgba(255, 255, 255, 0.5);
+   transition: all 0.3s ease;
+   cursor: pointer;
+ }
+
+ .dot.active {
+   background: white;
+   transform: scale(1.2);
+ }
+
+ .dot:hover {
+   background: rgba(255, 255, 255, 0.8);
+ }
+
+ @media (max-width: 768px) {
+   .block h1 {
+     font-size: 2rem;
+   }
+
+   .block p {
+     font-size: 1rem;
+   }
+ }
+

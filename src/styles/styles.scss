@@ -24,38 +24,9 @@ body {
 }
 
 .game-page {
-    display: flex;
-    flex-direction: column;
     padding: 1em;
-    gap: 1em;
     margin: 0 auto;
     max-width: 300px;;
 }
 
 
-
-// Mobile
-// ----------------
-@media screen and (max-width: $bp-mobile-landscape-max) {
-    .game-page {
-        // max-width: $bp-mobile-landscape-max;
-    }
-}
-
-
-// Tablet
-// ----------------
-@media screen and (min-width: $bp-tablet-portrait-min) {
-    .game-page {
-        max-width: $bp-mobile-landscape-max;
-    }
-}
-
-// Desktop
-// ----------------
-@media screen and (min-width: $bp-desktop-portrait-min) {
-    .game-page {
-        max-width: 600px;
-        flex-direction: row;
-    }
-}

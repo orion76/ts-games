@@ -10,12 +10,12 @@ import { CHAR_CROSS, CHAR_EMPTY, CHAR_ZERO, ICharShow } from "../../types";
     @let charData = char(); 
     @switch (charData.char) {
       @case (char_EMPTY) {
-        
+        <svg  class="char"  viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"></svg>
       }
       @case (char_CROSS) {
         <svg  class="char"  viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-          <line x1="10" y1="10" x2="50" y2="50" stroke-linecap="round" i18n-stroke-linecap [attr.stroke]="charData.charColor" [attr.stroke-width]="charWidth()" />
-          <line x1="50" y1="10" x2="10" y2="50" stroke-linecap="round" i18n-stroke-linecap [attr.stroke]="charData.charColor" [attr.stroke-width]="charWidth()" />
+          <line x1="10" y1="10" x2="50" y2="50" stroke-linecap="round" [attr.stroke]="charData.charColor" [attr.stroke-width]="charWidth()" />
+          <line x1="50" y1="10" x2="10" y2="50" stroke-linecap="round" [attr.stroke]="charData.charColor" [attr.stroke-width]="charWidth()" />
         </svg>
       }
       @case (char_ZERO) {

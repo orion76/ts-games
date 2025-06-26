@@ -1,0 +1,28 @@
+:host {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    user-select: none;
+
+    h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+
+    p {
+        font-size: 1.2rem;
+        opacity: 0.9;
+        max-width: 80%;
+    }
+
+
+
+}
+

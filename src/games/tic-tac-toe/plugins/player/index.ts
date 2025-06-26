@@ -1,3 +1,3 @@
 export * from './plugin-manager';
-export * from './plugins/player-human';
-export * from './plugins/bot';
+export * from './plugins/player-human.plugin';
+export * from '../../modules/player-bot/player-bot.plugin';

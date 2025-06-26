@@ -11,7 +11,10 @@
     "install:plugin": "./scripts/install_local_plugin.sh",
     "ip": "npm run install:plugin",
     "update-version": "npm version patch",
-    "uv": "npm run update-version"
+    "uv": "npm run update-version",
+    "extract-i18n": "ng extract-i18n --format json --output-path src/locale --out-file source.json",
+    "ei": "npm run extract-i18n",
+    "ttt":""
   },
   "private": true,
   "dependencies": {
@@ -25,6 +28,7 @@
     "@angular/platform-browser-dynamic": "^19.2.14",
     "@angular/platform-server": "^19.2.14",
     "@angular/router": "^19.2.14",
+    "@material-design-icons/font": "^0.14.15",
     "@ngrx/signals": "^19.2.1",
     "@orion76/ng-plugin": "^0.0.9",
     "@orion76/plugin": "^0.1.12",

@@ -7,6 +7,7 @@ import { setCellValue } from "../../utils/cell-utils";
 import { EGameStopReason, UGameStopReason } from "../game-management/types";
 import { GAME_CONFIG_SERVICE } from "../players-config.service";
 import { TGameStore } from "./types";
+import { withBotState } from "../../modules/player-bot";
 
 const EMPTY_FIELD: TFieldState = [
     [CHAR_EMPTY, CHAR_EMPTY, CHAR_EMPTY],
@@ -17,6 +18,7 @@ const EMPTY_FIELD: TFieldState = [
 export const GAME_STORE = new InjectionToken<TGameStore>('GAME_STORE')
 
 export const GameStore = signalStore(
+    withBotState(),
     withHooks(({
         onInit(store) {
             watchState(store, ({ activePlayerIndex }: any) => {
@@ -84,8 +86,7 @@ export const GameStore = signalStore(
             })
         },
         setActivePlayerIndex(index: number): void {
-            console.log('[STORE] setActivePlayerIndex', index);
-            patchState(store, () => ({ activePlayerIndex: index }))
+              patchState(store, () => ({ activePlayerIndex: index }))
         },
         startNewGame(): void {
             patchState<IGameState>(store, () => ({
@@ -94,7 +95,6 @@ export const GameStore = signalStore(
                 steps: [],
                 gameOver: false,
             }));
-            console.log('[STORE] startNewGame()')
         }
     }))
 )
