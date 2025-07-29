@@ -1,0 +1,17 @@
+@use '@material-design-icons/font';
+@use './modules/block-pages/block-pages-menu/block-pages-menu.stories.scss';
+
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    src: url('/fonts/Roboto/Roboto-VariableFont_wdth,wght.ttf') format('truetype'),
+}
+
+@font-face {
+    font-family: 'Roboto';
+    font-style: italic;
+    font-weight: 400;
+    src: url('/fonts/Roboto/Roboto-Italic-VariableFont_wdth,wght.ttf') format('truetype'),
+
+}

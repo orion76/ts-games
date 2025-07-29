@@ -1,174 +1,185 @@
-import { AfterContentInit, AfterViewInit, Component, ContentChildren, effect, ElementRef, inject, QueryList, signal, ViewChild, ViewChildren } from "@angular/core";
+import { AfterViewInit, Component, ContentChildren, effect, ElementRef, HostListener, inject, InjectionToken, input, numberAttribute, QueryList, signal, ViewChild } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { debounceTime, map, Observable, shareReplay, Subject, switchMap, takeUntil, tap, withLatestFrom } from "rxjs";
-import { WINDOW } from "../../../providers/window.provider";
-import { filterUndefined, ignoreError, log } from "../../../utils/rxjs-operators";
-import { IEventData, Maybe, TSwipeDirection } from "../../types";
-import { calcMoveTranslateX, formatTranstateX, getEventData } from "../../utils";
-import { BlockPageComponent } from "../block-page/block-page.component";
+import { distinctUntilChanged, filter, finalize, map, Subject, switchMap, takeUntil, throttleTime } from 'rxjs';
+import { filterUndefined } from '../../../utils/rxjs-operators';
+import { IEventData, IStartEventData, ISwipeData, TSwipeDirection } from '../../types';
+import { formatTranstateX, getEventData, getStartEventData, isEventWithTarget } from '../../utils';
+import { BlockPageComponent } from '../block-page/block-page.component';
+import { BlockPagesMenuComponent } from '../menu/block-pages-menu.component';
+import { IMenuConfig } from './types';
+
+export const BLOCK_PAGE_WIDTH = new InjectionToken<number>('BLOCK_PAGE_WIDTH');
 
 @Component({
     selector: 'block-pages',
     template: `
-
-           <!-- [style.width]="totalWidth" -->
-      <div #blocksWrapper class="blocks-wrapper"
-       [style.transform]="translateX()"
-    
-       (mousedown)="moveStart$.next($event)"
-       (mousemove)="move$.next($event)"
-       (mouseup)="moveEnd$.next(true)"
-       (mouseleave)="moveEnd$.next(true)"
-       (touchstart)="moveStart$.next($event)"
-       (touchmove)="move$.next($event)"
-       (touchend)="moveEnd$.next(true)"
-        >
-        <ng-content select="block-page"/>
-        
-      </div>
-   
-
-      
-      <div class="swipe-indicator">
-        @for(page of pages; track $index){
-
-        <!-- <button class="dot" [class.active]="$index === currentSlide" (click)="goToSlide($index)" >O</button> -->
+        @if (menuConfig()?.items) {
+            <block-pages-menu [items]="menuConfig()?.items" />
         }
-
-      </div>
-
-  `,
+        <div
+            #blocksWrapper
+            class="blocks-wrapper"
+            [style.transform]="sTranslateX()"
+            (mousedown)="moveStart$.next($event)"
+            (mousemove)="move$.next($event)"
+            (mouseup)="moveEnd$.next(true)"
+            (mouseleave)="moveEnd$.next(true)"
+            (touchstart)="moveStart$.next($event)"
+            (touchmove)="move$.next($event)"
+            (touchend)="moveEnd$.next(true)">
+            <ng-content select="block-page" />
+        </div>
+    `,
     styleUrl: 'block-pages.component.scss',
-    imports: []
+    imports: [BlockPagesMenuComponent],
 
+    providers: [
+        {
+            provide: BLOCK_PAGE_WIDTH,
+            useFactory: (component: BlockPagesComponent) => component.elementWidth,
+            deps: [BlockPagesComponent],
+        },
+    ],
 })
-export class BlockPagesComponent implements AfterContentInit {
-    currentSlide = 0;
-    totalSlides !: number;
+export class BlockPagesComponent implements AfterViewInit {
+    menuConfig = input<IMenuConfig | undefined>();
 
+    currentSlideIndex = 0;
+    slidesCount!: number;
+    containerWidth!: number;
+    containerOffset!: number;
+    maxAvailableOffset!: number;
+    swipaData: ISwipeData = { offset: 0, time: 0 };
 
-    window = inject(WINDOW);
+    readonly viewWidth = input(undefined, { transform: numberAttribute });
+    elementRef = inject(ElementRef<HTMLElement>);
+    elementWidth: number;
 
     moveStart$ = new Subject<Event>();
     move$ = new Subject<Event>();
-    moveEnd$ = new Subject<true>();
+    moveEnd$ = new Subject<Boolean>();
+
+    sTranslateX = signal<string | undefined>(undefined);
 
     @ViewChild('blocksWrapper', { static: false }) blocksWrapper!: ElementRef<HTMLElement>;
-
     @ContentChildren(BlockPageComponent) pages!: QueryList<BlockPageComponent>;
 
-    translateX = signal<string | undefined>(undefined);
-
     constructor() {
-        const moveStart$ = this.moveStart$.pipe(
+        const el: HTMLElement = this.elementRef.nativeElement;
+        this.elementWidth = this.viewWidth() || el.clientWidth;
+        this.containerOffset = el.getBoundingClientRect().left;
+        this.initSwipe();
+    }
+
+    ngAfterViewInit() {
+        this.slidesCount = this.pages.length;
+        this.containerWidth = this.elementWidth * this.slidesCount;
+
+        this.maxAvailableOffset = this.containerWidth - this.elementWidth;
+    }
+    initSwipe() {
+        const eventMoveStart$ = this.moveStart$.pipe(filter(isEventWithTarget), getStartEventData(this.containerOffset));
+
+        const eventMove$ = this.move$.pipe(
+            throttleTime(50),
             getEventData(),
-            tap(() => {
-                if (this.blocksWrapper) {
-                    this.blocksWrapper.nativeElement.classList.add('no-transition');
-                }
-            }),
-        );
-        const move$ = this.move$.pipe(getEventData(), debounceTime(5), shareReplay());
-        const moveEnd$ = this.moveEnd$.pipe(
-            tap(() => {
-                if (this.blocksWrapper) {
-                    this.blocksWrapper.nativeElement.classList.remove('no-transition');
-                }
-            }),
-        );
-        this.initDragndrop(moveStart$, move$, moveEnd$);
-        this.initMove(moveStart$, move$, moveEnd$);
-    }
-    ngAfterContentInit() {
-        this.totalSlides = this.pages.length;
-    }
-    initMove(moveStart$: Observable<IEventData>, move$: Observable<IEventData>, moveEnd$: Observable<true>) {
-        const _move$: Observable<number> = moveStart$.pipe(
-
-            switchMap((start) => move$.pipe(
-
-                map((end): Maybe<number> => calcMoveTranslateX(end.x - start.x, this.window.innerWidth, this.currentSlide, this.totalSlides)),
-                takeUntil(moveEnd$),
-            )),
-            ignoreError(),
-            filterUndefined(),
-
+            distinctUntilChanged((a, b) => a.x === b.x),
         );
 
-        const moveSignal = toSignal(_move$)
+        const moveTo$ = eventMoveStart$.pipe(
+            switchMap(start =>
+                eventMove$.pipe(
+                    map(end => {
+                        this.updateSwipaData(start, end);
+                        return this.calculateXMove(start, end);
+                    }),
+                    filterUndefined(),
+                    takeUntil(this.moveEnd$),
+                    finalize(() => {
+                        this.updateCurrentIndex();
+                        this.sTranslateX.set(formatTranstateX(-this.currentSlideIndex * this.elementWidth));
+                    }),
+                ),
+            ),
+        );
+        const sSwipe = toSignal(moveTo$);
         effect(() => {
-            const x = moveSignal();
-            // console.log('** translateX', x)
-            if (x) {
-                this.translateX.set(formatTranstateX(x))
+            const swipe = sSwipe();
+            if (swipe !== undefined) {
+                this.sTranslateX.set(formatTranstateX(swipe));
             }
         });
     }
 
-    initDragndrop(moveStart$: Observable<IEventData>, move$: Observable<IEventData>, moveEnd$: Observable<true>) {
-        const dragndrop$ = moveStart$.pipe(
-            switchMap((start) => moveEnd$.pipe(map(() => start))),
-            withLatestFrom(move$, (start, end): [IEventData, IEventData] => [start, end]),
-            log('*** [initDragndrop] moveEnd', { getDataFn: ([start, end]) => end.x - start.x }),
-            map((data) => {
-                let slideIndex = this.currentSlide;
-                switch (this.getSwipeDirection(data)) {
-                    case 'left':
-                        if (this.currentSlide > 0) {
-                            slideIndex--;
-                        }
-                        break
+    calculateXMove(start: IStartEventData, end: IEventData): number | undefined {
+        const { maxAvailableOffset } = this;
+        const diff = end.x - start.x;
+        if (diff === 0) {
+            return;
+        }
+        const targetX = start.elOffset + diff;
 
-                    case 'right':
-                        if (this.currentSlide < this.totalSlides - 1) {
-                            slideIndex++;
-                        }
-                        break;
-                }
-                this.currentSlide = slideIndex
-
-                return -slideIndex * 100;
-            }),
-
-            ignoreError(),
-
-            filterUndefined(),
-
-        )
-        const translateXSignal = toSignal(dragndrop$)
-        effect(() => {
-            const x = translateXSignal();
-            console.log('** translateX', x)
-            if (x !== undefined) {
-                this.translateX.set(formatTranstateX(x));
-            }
-        });
+        return diff > 0 ? Math.min(targetX, 0) : Math.max(targetX, -maxAvailableOffset);
     }
 
+    updateSwipaData(start: IEventData, end: IEventData) {
+        const offset = end.x - start.x;
+        const time = end.time - start.time;
+        this.swipaData = { offset, time };
+    }
 
-    // @HostListener('window:keydown', ['$event'])
-    // onKeyDown(event: KeyboardEvent) {
-    //     if (event.key === 'ArrowLeft') {
-    //         this.prevSlide();
-    //     } else if (event.key === 'ArrowRight') {
-    //         this.nextSlide();
-    //     }
-    // }
+    updateCurrentIndex(): void {
+        const { slidesCount } = this;
 
-    private getSwipeDirection([start, end]: [IEventData, IEventData]): TSwipeDirection | undefined {
-        const deltaX = end.x - start.x;
-        const deltaTime = end.time - start.time;
-        const velocity = Math.abs(deltaX) / deltaTime;
+        switch (this.getSwipeDirection()) {
+            case 'left':
+                if (this.currentSlideIndex > 0) {
+                    this.currentSlideIndex--;
+                }
+                break;
+            case 'right':
+                if (this.currentSlideIndex < slidesCount - 1) {
+                    this.currentSlideIndex++;
+                }
+                break;
+        }
+    }
 
-        const threshold = this.window.innerWidth * 0.25; // 25% экрана
+    private getSwipeDirection(): TSwipeDirection | undefined {
+        const offset = this.swipaData.offset;
+        const time = this.swipaData.time;
+
+        const velocity = Math.abs(offset) / time;
+
+        const threshold = this.elementWidth * 0.25; // 25% экрана
         const fastSwipe = velocity > 0.5; // Быстрый свайп
 
         let direction: TSwipeDirection | undefined;
-        if (Math.abs(deltaX) > threshold || fastSwipe) {
-            direction = deltaX > 0 ? 'left' : 'right'
+        if (Math.abs(offset) > threshold || fastSwipe) {
+            direction = offset > 0 ? 'left' : 'right';
         }
         return direction;
     }
 
+    prevSlide() {
+        if (this.currentSlideIndex < this.slidesCount) {
+            this.currentSlideIndex++;
+            this.sTranslateX.set(formatTranstateX(-this.currentSlideIndex * this.elementWidth));
+        }
+    }
 
+    nextSlide() {
+        if (this.currentSlideIndex > 0) {
+            this.currentSlideIndex--;
+            this.sTranslateX.set(formatTranstateX(-this.currentSlideIndex * this.elementWidth));
+        }
+    }
+    @HostListener('window:keydown', ['$event'])
+    onKeyDown(event: KeyboardEvent) {
+        if (event.key === 'ArrowLeft') {
+            this.prevSlide();
+        } else if (event.key === 'ArrowRight') {
+            this.nextSlide();
+        }
+    }
 }

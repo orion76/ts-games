@@ -1,9 +1,10 @@
+import { TCellCoord } from "@libs/common";
 import { LINES_COORDS } from "../../../constants";
 import { getEmptyCells } from "../../../services/utils";
-import { TFieldState, UChar, TCellCoord } from "../../../types";
-import { hasCell } from "../../../utils/cell-utils";
+import { TFieldState, UChar } from "../../../types";
 import { findLinesByCharCount } from "../../../utils/field-result";
 import { TLineCoord } from "../../../utils/generate-coordinates";
+import { hasCell } from "@libs/cell-utils";
 
 
 export function getLinesWithCellFilledCount(field: TFieldState, char: UChar, cellFilledCount: number): TLineCoord[] {

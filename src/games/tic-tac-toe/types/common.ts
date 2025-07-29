@@ -1,5 +1,5 @@
-import { IPlugin } from "@orion76/plugin";
-import { TCellCoord, TFieldState, UChar } from "./state";
+import { TCellCoord } from "@libs/common";
+
 
 
 export interface IGameResult {

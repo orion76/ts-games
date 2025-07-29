@@ -3,7 +3,7 @@ import { patchState, signalStore, watchState, withComputed, withHooks, withMetho
 import { GAME_CONFIG } from "../../main.component";
 import { CHAR_EMPTY, IGameState, IPlayerConfig, IStepData, TFieldState, TGameStatus, TPlayerIds, TStepStatusActive, UChar } from "../../types";
 import { assertStepAndStatus } from "../../utils/asserts";
-import { setCellValue } from "../../utils/cell-utils";
+import { setCellValue } from "../../../../libs/cell-utils";
 import { EGameStopReason, UGameStopReason } from "../game-management/types";
 import { GAME_CONFIG_SERVICE } from "../players-config.service";
 import { TGameStore } from "./types";

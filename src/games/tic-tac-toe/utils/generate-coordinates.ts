@@ -1,4 +1,4 @@
-import { TCellCoord } from "../types";
+import { TCellCoord } from "@libs/common";
 
 export type TLineCoord = [TCellCoord, TCellCoord, TCellCoord];
 

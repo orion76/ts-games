@@ -1,9 +1,8 @@
 import { signal } from "@angular/core";
+import { TCellCoord } from "@libs/common";
 import { NgPluginBase } from "@orion76/ng-plugin";
-import { IStepData, TCellCoord } from "../../types";
+import { IStepData } from "../../types";
 import { IPlayer, IPlayerDefinition } from "./types";
-
-
 
 export abstract class PlayerBase<D extends IPlayerDefinition = IPlayerDefinition> extends NgPluginBase<D> implements IPlayer {
     readonly onStep = signal<IStepData | undefined>(undefined);

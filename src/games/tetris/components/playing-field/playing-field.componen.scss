@@ -1,0 +1,31 @@
+:host {
+    min-width: 10em;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.tetronimo {
+    max-width: 100px;
+    display: block;
+    fill: #ffffff;
+    stroke: #777777;
+    // stroke-width: 2px;
+}
+
+.row {
+    display: flex;
+
+}
+
+.cell {
+    --cell-size: 14px;
+    width: var(--cell-size);
+    height: var(--cell-size);
+    background-color: #000;
+    margin: 1px;
+
+    &.filled {
+        background-color: #f00;
+    }
+}

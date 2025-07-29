@@ -1,12 +1,13 @@
 import { inject, Injectable, InjectionToken } from "@angular/core";
 import { CHAR_EMPTY, IStepData } from "../../types";
-import { getCellValue } from "../../utils/cell-utils";
+
 
 import { GAME_STORE } from "../store/game.store";
 import { FIELD_CELLS_COUNT } from "./constants";
 import { IStepCheckService, UStepInvalidReason, EStepInvalidReason, UGameStopReason, EGameStopReason } from "./types";
 import { assertStepAndStatus } from "../../utils/asserts";
 import { findLinesByCharCount } from "../../utils/field-result";
+import { getCellValue } from "@libs/cell-utils";
 
 export const STEP_CHECK_SERVICE = new InjectionToken<IStepCheckService>('STEP_CHECK_SERVICE');
 

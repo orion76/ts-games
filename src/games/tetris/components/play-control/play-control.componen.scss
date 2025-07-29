@@ -1,0 +1,43 @@
+.control-buttons {
+    width: 100%;
+    margin: 0 auto;
+
+
+    display: grid;
+    grid-template-areas:
+        "rotate-left      .     rotate-right"
+        "rotate-left  move-down  rotate-right"
+        "move-left    move-down  move-right"
+        "move-left        .      move-right"
+
+    ;
+
+    .rotate-left {
+        grid-area: rotate-left;
+    }
+
+    .rotate-right {
+        grid-area: rotate-right;
+    }
+
+    .move-left {
+        grid-area: move-left;
+    }
+
+    .move-right {
+        grid-area: move-right;
+    }
+
+    .move-down {
+        grid-area: move-down;
+    }
+}
+
+
+
+.play-button.mat-mdc-fab-base  {
+    margin: .5em;
+    width: 40px;
+    height: 40px;
+
+}

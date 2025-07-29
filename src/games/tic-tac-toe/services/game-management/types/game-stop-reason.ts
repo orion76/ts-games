@@ -1,5 +1,3 @@
-import { IStepData } from "../../../types";
-
 export enum EGameStopReason {
     STEPS_OVER = 'steps-over',
     WIN = 'win',

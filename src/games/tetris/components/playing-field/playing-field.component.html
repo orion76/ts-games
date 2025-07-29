@@ -1,0 +1,10 @@
+<!-- <tetris-play-control></tetris-play-control>
+        <i-tetronimo [stateNumber]="3" />
+        <o-tetronimo [stateNumber]="1" /> -->
+@for (cells of snField(); track $index; let ri = $index) {
+<div class="row">
+    @for (filled of cells; track $index; let ci = $index) {
+    <div class="cell" [class.filled]="filled"></div>
+    }
+</div>
+}

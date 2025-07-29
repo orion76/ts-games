@@ -1,6 +1,7 @@
+import { getCellValue } from "@libs/cell-utils";
+import { TCellCoord } from "@libs/common";
 import { LINES_COORDS } from "../constants";
-import { TCellCoord, TFieldState, UChar } from "../types";
-import { getCellValue } from "./cell-utils";
+import { TFieldState, UChar } from "../types";
 import { TLineCoord } from "./generate-coordinates";
 
 

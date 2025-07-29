@@ -1,0 +1,28 @@
+@use '../../styles/variables.scss' as *;
+
+.game-page {
+  display: grid;
+}
+
+.tetris-play-control,
+.tetris-playing-field {
+  display: block;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+@media screen and (min-width: $bp-desktop-landscape-min) {}
+
+
+// Mobile
+// ----------------
+@media screen and (max-width: $bp-mobile-landscape-max) {}
+
+
+// Tablet
+// ----------------
+@media screen and (min-width: $bp-tablet-portrait-min) {}
+
+// Desktop
+// ----------------
+@media screen and (min-width: $bp-desktop-portrait-min) {}

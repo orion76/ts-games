@@ -1,0 +1,39 @@
+:host {
+    width: fit-content;
+}
+
+.menu-item {
+    --menu-item-title-color: #ffffff;
+    --menu-item-icon-color: #ffffff;
+    --menu-item-hover-background-color: rgba(255, 255, 255, .1);
+    --mdc-text-button-container-shape: 0;
+    display: flex;
+    opacity: .4;
+
+    &.only-icon {
+        padding: 0;
+        min-width: 48px;
+
+        .menu-item__icon {
+            margin-left: 0;
+            margin-right: 0;
+        }
+    }
+
+    &__title {
+        color: var(--menu-item-title-color);
+    }
+
+    &__icon {
+        color: var(--menu-item-icon-color);
+    }
+
+    &.active {
+        opacity: .6;
+    }
+
+    &:hover {
+        opacity: .6;
+        background-color: var(--menu-item-hover-background-color);
+    }
+}

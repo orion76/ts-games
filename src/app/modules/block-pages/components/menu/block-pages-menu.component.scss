@@ -1,0 +1,27 @@
+   :host {
+
+
+       &.direction-horizontal {
+           display: flex;
+           flex-direction: row;
+       }
+
+       &.direction-vertical {
+           display: flex;
+           flex-direction: column;
+           width: max-content;
+       }
+
+   }
+
+   .style-default {
+       background-color: transparent;
+
+       .menu {
+           background-color: transparent;
+       }
+
+       .menu-item {
+           display: block;
+       }
+   }

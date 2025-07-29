@@ -1,18 +1,18 @@
-import { NgPluginBase, Plugin } from "@orion76/ng-plugin";
+import { NgPluginBase, Plugin } from '@orion76/ng-plugin';
 
-import { TTT_STRATEGIES_PLUGIN_TYPE } from "../plugin-manager";
-import { arraysDifferenceLeft, arraysIntersection, getLinesWithCellFilledCount } from "../utils";
-import { getEmptyCells, getRandomItem } from "../../../../services/utils";
-import { TCellCoord } from "../../../../types";
-import { IGameStrategy, IStrategiOptions } from "../../types";
+import { TCellCoord } from '@libs/common';
+import { getRandomItem } from '@libs/random';
+import { getEmptyCells } from '../../../../services/utils';
+import { IGameStrategy, IStrategiOptions } from '../../types';
+import { TTT_STRATEGIES_PLUGIN_TYPE } from '../plugin-manager';
+import { arraysDifferenceLeft, arraysIntersection, getLinesWithCellFilledCount } from '../utils';
 
-
-export const STRATEGY_ID_GIVEAWAYS = 'giveaways'
+export const STRATEGY_ID_GIVEAWAYS = 'giveaways';
 
 @Plugin({
     id: STRATEGY_ID_GIVEAWAYS,
     label: 'Giveaways',
-    type: TTT_STRATEGIES_PLUGIN_TYPE
+    type: TTT_STRATEGIES_PLUGIN_TYPE,
 })
 export class StrategyGiveaways extends NgPluginBase implements IGameStrategy {
     step({ field, myChar: charMy, opponentChar: charOpponent }: IStrategiOptions): TCellCoord {
@@ -34,15 +34,13 @@ export class StrategyGiveaways extends NgPluginBase implements IGameStrategy {
             opponentDoubleFilledLines = arraysDifferenceLeft(opponentDoubleFilledLines, forbiddenSteps);
             forbiddenSteps = forbiddenSteps.concat(arraysIntersection(emptyCells, opponentDoubleFilledLines));
         }
-        
-        const allowedSteps = arraysDifferenceLeft(emptyCells, forbiddenSteps)
+
+        const allowedSteps = arraysDifferenceLeft(emptyCells, forbiddenSteps);
 
         if (allowedSteps.length > 0) {
-            return getRandomItem(allowedSteps)
+            return getRandomItem(allowedSteps);
         }
-
 
         return getRandomItem(emptyCells)!;
     }
 }
-

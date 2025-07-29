@@ -1,5 +1,6 @@
+import { TCellCoord } from "@libs/common";
 import { UGameOverReason } from "../services/game-management/types";
-import { IGameConfig, IPlayerConfig, TPlayerIds } from "./config";
+import { IPlayerConfig, TPlayerIds } from "./config";
 
 export const CHAR_CROSS = 'X';
 export const CHAR_ZERO = 'O';
@@ -11,7 +12,7 @@ export type UChar = typeof CHAR_CROSS | typeof CHAR_ZERO | typeof CHAR_EMPTY;
 
 export type TFieldRowState = UChar[];
 export type TFieldState = TFieldRowState[];
-export type TCellCoord = [number, number];
+
 
 export type TStepStatusActive = 'started' | 'progress' | 'completed'
 export type TStepStatusPassive = 'awaiting' | 'canceled'

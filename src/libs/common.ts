@@ -1,0 +1,1 @@
+export type TCellCoord = [number, number];

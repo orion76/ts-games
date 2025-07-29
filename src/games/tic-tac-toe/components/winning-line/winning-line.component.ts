@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, input, OnInit, ViewEncapsulation } from "@angular/core";
-import { TCellCoord } from "../../types";
-
+import { TCellCoord } from "@libs/common";
 
 interface ISvgLineCoords {
   x1: number;

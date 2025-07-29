@@ -1,6 +1,7 @@
 import { IPlugin, IPluginDefinition } from "@orion76/plugin";
 import { IPlayer, IPlayerDefinition } from "../../plugins/player/types";
-import { TFieldState, UChar, TCellCoord } from "../../types";
+import { TFieldState, UChar } from "../../types";
+import { TCellCoord } from "@libs/common";
 
 
 export interface IStrategiOptions {

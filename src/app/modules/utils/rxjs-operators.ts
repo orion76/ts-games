@@ -2,20 +2,26 @@ import { catchError, filter, Observable, of, tap } from "rxjs";
 import { Maybe } from "../block-pages/types";
 
 
-export interface ILogOptions<T> {
+export interface ILogOptions<T = unknown> {
     getDataFn?: (data: T) => unknown
     outputStacktrace?: boolean;
+    color?: string;
 }
 
 export function log<T>(prefix: string, options?: ILogOptions<T>) {
-    let { getDataFn, outputStacktrace }: ILogOptions<T> = options ?? {};
+    let { getDataFn, outputStacktrace, color }: ILogOptions<T> = options ?? {};
 
     if (!getDataFn) {
         getDataFn = (data: T) => data
     }
-    return tap((data: T) => {
 
-        console.log(prefix, getDataFn(data));
+    return tap((data: T) => {
+        const args = [prefix];
+        if (color) {
+            args[0] = '%c' + args[0];
+            args.push(`color: ${color}`);
+        }
+        console.log(...args, getDataFn(data));
         if (outputStacktrace) {
             console.trace()
         }

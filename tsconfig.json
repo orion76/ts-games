@@ -17,7 +17,15 @@
     "importHelpers": true,
     "target": "ES2022",
     "module": "ES2022",
-    "preserveSymlinks": true
+    "preserveSymlinks": true,
+    "paths": {
+      "@libs/*": [
+        "./src/libs/*"
+      ],
+      "@src-root/*": [
+        "./src/*"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
